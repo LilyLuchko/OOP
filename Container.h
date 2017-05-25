@@ -8,114 +8,116 @@
 template <typename T> class Container
 {
 private:
-	struct element{
+	struct element
+	{
 		T data;
 		element *pNext;
 	};
 	element *pHead;
-	
-	Container(const Container&x){
-	};
-	Container&operator=(const Container&x){
+	Container(const Container&x){};
+	Container&operator=(const Container&x){};
 
-	};
-	public:
-		bool Empty() const
+public:
+	bool Empty() const
 	{
-		return (head == NULL);
+		return (pHead==NULL);
 	}
-		class Iterator{
-			element *d;
-		public:
-			Iterator()
-			{
-              d = NULL;
-			}
-		void operator=(element* x){
-        (*this).d = x;
-        }
-        void operator++(){
-        if(d!=NULL)
-			d = d->pNext;
-        }
+	class Iterator
+	{
+		element *d;
+	public:
+		Iterator()
+		{
+         d=NULL;
+		}
+		void operator=(element* x)
+		{
+			this->d=x;
+		}
+		void operator++()
+		{
+			if(d!=NULL)
+				d=d->pNext;
+		}
 		bool operator == (Iterator const & other) const
 		{
-			if (d == other.d)
-				return true;
-			else
-				return false;
+			return d==other.d;
 		}
-
-		bool operator != (Iterator const & other) const
+		bool operator !=(Iterator const & other) const
 		{
-			if (d == other.d)
-				return false;
-			else
+			return false;
+			else 
 				return true;
 		}
-      T operator*(){
-    if(d!=NULL)
-	return (*d).data;
-     }
-element * operator->(){
-if(d!=NULL)
-	return d;
-   }
-		
-};
-Iterator begin(){
-Iterator k;
-k = pHead;
-return k;
-}
-Iterator end(){
-return NULL;
-}
-	Container(){
-		pHead = NULL;
+		T operator*()
+		{
+			if (d!=NULL)
+				return d->data;
+		}
+		element * operator->()
+		{
+			if(d!=NULL)
+				return d;
+		}
+	};
+	Iterator begin()
+	{
+		Iterator k;
+		k=pHead;
+		return k;
+	}
+	Iterator end()
+	{
+		return NULL;
+	}
+	Container()
+	{
+		pHead=NULL;
 	}
 	~Container()
 	{
 		element *tmp;
-		while (pHead != NULL)
-			tmp = pHead->pNext;
-			delete pHead;
-			pHead = tmp;
+		while (pHead!=NULL)
+			tmp=pHead->pNext;
+		delete pHead;
+		pHead=tmp;
+
 	}
-
-
 	void AddBegin(T x)
 	{
-		element *b = new element;
-		b->data = x;
-		b->pNext = pHead;
-		pHead = b;
-
+		element *b=new element;
+		b->data=x;
+		b->pNext=pHead;
+		pHead=b;
 	}
-	void AddEnd(T x){
-		
+	void AddEnd(T& x)
+	{
 		element *end = new element;
 		element *q=pHead;
 		end->data = x;
 		end->pNext = NULL;
-		//q = pHead;
-		if (pHead == NULL) {
+		if (pHead == NULL) 
+		{
 			pHead = end;
 			return;
 		}
 
-		while (q->pNext != NULL){
+		while (q->pNext != NULL)
+		{
 			q = q->pNext;
 		}
 		q->pNext = end;
 	}
-	void DeleteBegin(T x){
+	void DeleteBegin(T x)
+	{
 		element *newHead = pHead->pNext;
 		delete pHead;
 		pHead = newHead;
 	}
-	void DeleteEnd(T x){
-		if (pHead == NULL){
+	void DeleteEnd(T x)
+	{
+		if (pHead == NULL)
+		{
 			return;
 		}
 		element *t;
@@ -154,18 +156,19 @@ return NULL;
 		else
 			return 0;
 	}
-	void print(){
+	void print()
+	{
 		element *q = pHead;
-		if (q == NULL){
+		if (q == NULL)
+		{
 			std::cout << q->data << '\n';
 		}
-		while (q != NULL){
+		while (q != NULL)
+		{
 			std::cout << q->data << '\n';
 			q = q->pNext;
 		}
 		
 	}
-	
-};
-	
 
+};
